@@ -77,6 +77,30 @@ const operations: operation[] = [
     method: "DELETE",
     fields: { id: "input" },
   },
+  {
+    name: "Add Movie",
+    endpoint: "/api/movie",
+    method: "POST",
+    fields: { title: "input", genres: "input", platforms: "input" },
+  },
+  {
+    name: "Get Movies (empty for all)",
+    endpoint: "/api/movie",
+    method: "GET",
+    fields: { title: "input" },
+  },
+  {
+    name: "Add Favorite",
+    endpoint: "/api/favorite",
+    method: "POST",
+    fields: { title: "input" },
+  },
+  {
+    name: "Get Favorites",
+    endpoint: "/api/favorite",
+    method: "GET",
+    fields: { user: "input" },
+  },
 ];
 
 // Do not edit below here.

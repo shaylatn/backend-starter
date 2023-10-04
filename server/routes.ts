@@ -2,13 +2,44 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Friend, Post, User, WebSession } from "./app";
+import { Favorite, Friend, Movie, Post, Rating, User, WebSession } from "./app";
 import { PostDoc, PostOptions } from "./concepts/post";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 import Responses from "./responses";
 
 class Routes {
+  @Router.post("/rating")
+  async create(session: WebSessionDoc, movie: ObjectId, rating: Number) {
+    const user = WebSession.getUser(session);
+    return await Rating.create(user, movie, rating);
+  }
+
+  @Router.post("/favorite")
+  async createFavorites(session: WebSessionDoc, item: ObjectId) {
+    const user = WebSession.getUser(session);
+    return await Favorite.addFavorite(user, item);
+  }
+  @Router.get("/favorite")
+  async getFavorites(session: WebSessionDoc) {
+    const user = WebSession.getUser(session);
+    return await Favorite.getByUser(user);
+  }
+
+  @Router.post("/movie")
+  async createMovie(title: string, genres: Set<string>, platforms: Set<string>) {
+    return await Movie.create(title, genres, platforms);
+  }
+
+  @Router.get("/movie")
+  async getMovies(title: string) {
+    if (title) {
+      return await Movie.getByTitle(title);
+    } else {
+      return await Movie.getMovies({});
+    }
+  }
+
   @Router.get("/session")
   async getSessionUser(session: WebSessionDoc) {
     const user = WebSession.getUser(session);
