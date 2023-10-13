@@ -9,20 +9,15 @@ import { WebSessionDoc } from "./concepts/websession";
 import Responses from "./responses";
 
 class Routes {
-  //@Router.get("/rating")
-  //async getRating(session: WebSessionDoc, movie: ObjectId) {}
+  @Router.get("/rating")
+  async getRatings(movie: ObjectId) {
+    if (movie) {
+      return await Rating.getMovieRating(movie);
+    } else {
+      return await Rating.getRatings({});
+    }
+  }
 
-  //@Router.post("/friend")
-  //async sendRequest() {}
-
-  //@Router.get("/friend")
-  //async getRequests() {}
-
-  //@Router.get("/friend")
-  //async getFriends() {}
-
-  //@Router.get("/friend")
-  //async sendResponse() {}
   @Router.post("/rating")
   async create(session: WebSessionDoc, movie: ObjectId, rating: Number) {
     const user = WebSession.getUser(session);

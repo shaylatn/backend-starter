@@ -1,6 +1,5 @@
-import { ObjectId } from "mongodb";
+import { Filter, ObjectId } from "mongodb";
 import DocCollection, { BaseDoc } from "../framework/doc";
-// import { NotAllowedError, NotFoundError } from "./errors";
 
 export interface RatingDoc extends BaseDoc {
   author: ObjectId;
@@ -14,5 +13,14 @@ export default class RatingConcept {
   async create(author: ObjectId, movie: ObjectId, rating: Number) {
     const _id = await this.ratings.createOne({ author, movie, rating });
     return { msg: "Rating successfully created!", post: await this.ratings.readOne({ _id }) };
+  }
+
+  async getRatings(query: Filter<RatingDoc>) {
+    const rates = await this.ratings.readMany(query);
+    return rates;
+  }
+
+  async getMovieRating(movie: ObjectId) {
+    return await this.getRatings({ movie });
   }
 }

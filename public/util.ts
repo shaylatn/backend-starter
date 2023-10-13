@@ -101,6 +101,18 @@ const operations: operation[] = [
     method: "GET",
     fields: { user: "input" },
   },
+  {
+    name: "Create Rating",
+    endpoint: "/api/rating",
+    method: "POST",
+    fields: { movie: "input", rating: "input" },
+  },
+  {
+    name: "Get Ratings",
+    endpoint: "/api/rating",
+    method: "GET",
+    fields: { movie: "input", author: "input" },
+  },
 ];
 
 // Do not edit below here.
